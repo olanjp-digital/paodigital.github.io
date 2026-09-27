@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200" viewBox="0 0 1200 1200" role="img" aria-labelledby="title desc">
+<title id="title">Jose Paolo Olan profile placeholder</title>
+<desc id="desc">A branded placeholder with the initials JO.</desc>
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#17212d"/><stop offset="1" stop-color="#0b0f14"/></linearGradient></defs>
+<rect width="1200" height="1200" rx="80" fill="url(#g)"/>
+<circle cx="930" cy="250" r="260" fill="#28c7c9" opacity=".12"/>
+<text x="600" y="680" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="330" fill="#28c7c9" letter-spacing="-35">JO</text>
+</svg>

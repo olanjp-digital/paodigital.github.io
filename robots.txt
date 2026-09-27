@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://olanjp-digital.github.io/paodigital.github.io/sitemap.xml
