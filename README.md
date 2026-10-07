@@ -1,78 +1,36 @@
 # Jose Paolo Olan — Digital Marketing Portfolio
 
-A custom static portfolio site for **Jose Paolo Olan**, focused on Digital Marketing, Growth Marketing, Social Media Strategy, Meta Media Buying, Content, Creative, and Analytics.
+This repository powers the personal portfolio of **Jose Paolo Olan**, a Digital Marketing & Growth Marketing Specialist.
 
-## Live site
+## Portfolio focus
 
-Planned GitHub Pages URL:
+- Social media strategy and management
+- Meta media buying
+- Content strategy and copywriting
+- Creative strategy and graphic design
+- Analytics and performance reporting
+- Multi-market organic social
 
-`https://olanjp-digital.github.io/paodigital.github.io/`
+## Case studies
 
-## Portfolio structure
+The public site includes selected work across Meta media buying, INTO University Partnerships, Surge Fitness Lifestyle and freelance creative work. Public case studies intentionally avoid confidential internal data unless it is appropriate and approved for publication.
 
-- `index.html` — Homepage
-- `work.html` — Selected case studies
-- `about.html` — Experience and certifications
-- `contact.html` — Contact page
-- `case-studies/meta-media-buyer.html`
-- `case-studies/into-university.html`
-- `case-studies/surge-fitness.html`
-- `case-studies/freelance-creative.html`
-- `css/style.css` — Responsive visual system
-- `js/main.js` — Mobile navigation, reveal animation, footer year
-- `assets/images/` — Portfolio images and social preview assets
+## Tech
 
-## Important content rule
+The current interface is based on the open-source-style personal portfolio template by BrewedOps and has been adapted for this portfolio using React, TypeScript and Vite.
 
-The site intentionally does **not** invent campaign metrics. Where verified campaign data is not yet available, the case studies mark results as pending. Replace those placeholders only with evidence-backed figures from Ads Manager, GA4, CRM, platform analytics, or approved reports.
-
-## Adding portfolio evidence
-
-Before adding client or employer screenshots:
-
-1. Remove personal/customer data.
-2. Crop or redact ad account IDs and confidential details.
-3. Confirm the material is allowed to be published.
-4. Prefer percentage changes or ranges where exact figures are confidential.
-5. Add timeframe and comparison context to every result.
-
-## Local preview
-
-Open `index.html` directly in a browser, or run a simple local server from the project folder:
+## Local development
 
 ```bash
-python -m http.server 8000
+npm install
+npm run dev
+npm run build
 ```
 
-Then open `http://localhost:8000`.
+## License
 
-## GitHub Pages
+Template code is used under the terms in [LICENSE](LICENSE), including the additional permission for building and hosting your own portfolio.
 
-This repository includes a GitHub Pages Actions workflow at `.github/workflows/pages.yml`. The public CV download can be added later after uploading the approved PDF asset.
+Required Notice: Copyright (c) 2026 BrewedOps (https://github.com/brewed-ops/portfolio-template)
 
-For deployment:
-
-1. Use the public repository `paodigital.github.io`.
-2. Upload/commit this project to the repository root.
-3. Open **Settings → Pages**.
-4. Set **Source** to **GitHub Actions** if it is not already enabled.
-5. Push to `main` and allow the workflow to deploy.
-
-## Customization
-
-The main design variables are at the top of `css/style.css`:
-
-```css
-:root {
-  --bg: #0b0f14;
-  --surface: #111821;
-  --text: #f4f7fa;
-  --muted: #a8b3bf;
-  --accent: #28c7c9;
-}
-```
-
-## Contact
-
-Jose Paolo Olan  
-Email: `olan.jp@gmail.com`
+Portfolio content and case-study copy are © Jose Paolo Olan unless otherwise noted. Third-party trademarks, brand names and linked public content remain the property of their respective owners.
