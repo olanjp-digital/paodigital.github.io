@@ -34,7 +34,7 @@ export const profile: Profile = {
   firstName: 'Pao',
   handle: '@paodigital',
   role: 'Digital Marketing & Growth Marketing Specialist',
-  avatarSrc: `${BASE}avatar.svg`,
+  avatarSrc: `${BASE}profile.jpg`,
   verifiedLabel: 'Professional digital marketing portfolio',
   email: 'olan.jp@gmail.com',
   location: 'Batangas, Philippines',
@@ -46,8 +46,8 @@ export const profile: Profile = {
   displayName: { line1: 'Strategy. Creative.', line2: 'Performance.' },
   hero: {
     body: 'I build data-informed social, paid media, content and creative systems that connect audience insight to measurable marketing objectives.',
-    portraitSrc: `${BASE}avatar.svg`,
-    portraitAlt: 'Jose Paolo Olan portfolio mark',
+    portraitSrc: `${BASE}profile.jpg`,
+    portraitAlt: 'Jose Paolo Olan profile photo',
   },
   socials: [
     { label: 'LinkedIn profile', href: 'https://www.linkedin.com/in/paodigital/', iconPath: `${BASE}icons/linkedin.svg` },
