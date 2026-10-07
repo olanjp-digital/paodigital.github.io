@@ -2,78 +2,69 @@ import { useEffect, useState } from 'react'
 import { ArrowUpRight, X } from '@/components/slab'
 
 const BASE = import.meta.env.BASE_URL
-const CLIENT_WORK_URL = 'https://olanjp.wixsite.com/paodigital/work'
 
-type LinkCase = {
-  kind: 'link'
+type CaseItem = {
   index: string
   title: string
   category: string
   summary: string
   meta: string
-  href: string
+  embedUrl: string
+  eyebrow: string
 }
-
-type ModalCase = {
-  kind: 'modal'
-  index: string
-  title: string
-  category: string
-  summary: string
-  meta: string
-}
-
-type CaseItem = LinkCase | ModalCase
 
 const CASES: CaseItem[] = [
   {
-    kind: 'link',
     index: '01',
     title: 'Meta Media Buyer',
     category: 'Performance Marketing',
     summary: 'Freelance Meta campaign management focused on structure, audience strategy, creative testing and optimization.',
     meta: 'Meta Ads · Lead Generation · Optimization',
-    href: `${BASE}case-studies/meta-media-buyer.html`,
+    embedUrl: `${BASE}case-studies/meta-media-buyer.html`,
+    eyebrow: 'Case Study 01 · Performance Marketing',
   },
   {
-    kind: 'link',
     index: '02',
     title: 'Multi-Market Organic Social',
     category: 'INTO University Partnerships',
     summary: 'Organic social support across approximately 15 centres, with Facebook and Instagram execution across US, UK and Asia markets.',
     meta: '≈15 centres · US · UK · Asia',
-    href: `${BASE}case-studies/into-university.html`,
+    embedUrl: `${BASE}case-studies/into-university.html`,
+    eyebrow: 'Case Study 02 · Organic Social',
   },
   {
-    kind: 'link',
     index: '03',
     title: 'Paid + Organic Social Growth',
     category: 'Surge Fitness Lifestyle',
     summary: 'Integrated social content and paid campaign execution supporting visibility, engagement and acquisition activity.',
     meta: 'Social · Meta Ads · Content',
-    href: `${BASE}case-studies/surge-fitness.html`,
+    embedUrl: `${BASE}case-studies/surge-fitness.html`,
+    eyebrow: 'Case Study 03 · Integrated Social',
   },
   {
-    kind: 'modal',
     index: '04',
     title: 'Creative Systems Across Client Work',
     category: 'Freelance',
     summary: 'Digital creative production across e-commerce and service clients, from branded social content to promotional and advertising assets.',
     meta: 'Design · Social · E-commerce · Services',
+    embedUrl: 'https://olanjp.wixsite.com/paodigital/work',
+    eyebrow: 'Case Study 04 · Freelance Client Work',
   },
 ]
 
 export default function ProjectsGrid() {
-  const [clientWorkOpen, setClientWorkOpen] = useState(false)
+  const [activeCase, setActiveCase] = useState<CaseItem | null>(null)
 
   useEffect(() => {
-    if (!clientWorkOpen) return
+    if (!activeCase) return
+
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setClientWorkOpen(false)
+      if (event.key === 'Escape') setActiveCase(null)
     }
+
     window.addEventListener('keydown', onKeyDown)
     return () => window.removeEventListener('keydown', onKeyDown)
-  }, [clientWorkOpen])
+  }, [activeCase])
 
   return (
     <>
@@ -85,68 +76,53 @@ export default function ProjectsGrid() {
         </header>
 
         <div className="pao-projects">
-          {CASES.map((item) => {
-            const contents = (
-              <>
-                <span className="pao-case__index">{item.index}</span>
-                <span className="pao-case__category">{item.category}</span>
-                <strong>{item.title}</strong>
-                <p>{item.summary}</p>
-                <span className="pao-case__meta">{item.meta}</span>
-                <span className="pao-case__arrow"><ArrowUpRight size={18} weight="bold" aria-hidden="true" /></span>
-              </>
-            )
-
-            if (item.kind === 'modal') {
-              return (
-                <button
-                  type="button"
-                  className="pao-case pao-case--button"
-                  key={item.index}
-                  onClick={() => setClientWorkOpen(true)}
-                  aria-haspopup="dialog"
-                >
-                  {contents}
-                </button>
-              )
-            }
-
-            return (
-              <a className="pao-case" href={item.href} key={item.index}>
-                {contents}
-              </a>
-            )
-          })}
+          {CASES.map((item) => (
+            <button
+              type="button"
+              className="pao-case pao-case--button"
+              key={item.index}
+              onClick={() => setActiveCase(item)}
+              aria-haspopup="dialog"
+              aria-label={`Open ${item.title} case study`}
+            >
+              <span className="pao-case__index">{item.index}</span>
+              <span className="pao-case__category">{item.category}</span>
+              <strong>{item.title}</strong>
+              <p>{item.summary}</p>
+              <span className="pao-case__meta">{item.meta}</span>
+              <span className="pao-case__arrow"><ArrowUpRight size={18} weight="bold" aria-hidden="true" /></span>
+            </button>
+          ))}
         </div>
 
         <p className="pao-footnote">Results are only shown where the available evidence and publication context make them appropriate for a public portfolio.</p>
       </section>
 
-      {clientWorkOpen && (
+      {activeCase && (
         <div
           className="pao-work-modal"
           role="presentation"
           onMouseDown={(event) => {
-            if (event.currentTarget === event.target) setClientWorkOpen(false)
+            if (event.currentTarget === event.target) setActiveCase(null)
           }}
         >
           <section
             className="pao-work-modal__dialog"
             role="dialog"
             aria-modal="true"
-            aria-labelledby="client-work-title"
+            aria-labelledby="portfolio-case-title"
           >
             <header className="pao-work-modal__head">
               <div>
-                <span className="pao-eyebrow">Freelance · Client Work</span>
-                <h2 id="client-work-title">Creative Systems Across Client Work</h2>
-                <p>Selected creative work embedded directly from my Wix portfolio.</p>
+                <span className="pao-eyebrow">{activeCase.eyebrow}</span>
+                <h2 id="portfolio-case-title">{activeCase.title}</h2>
+                <p>{activeCase.category}</p>
               </div>
               <button
                 type="button"
                 className="pao-work-modal__close"
-                onClick={() => setClientWorkOpen(false)}
-                aria-label="Close client work"
+                onClick={() => setActiveCase(null)}
+                aria-label="Close case study"
               >
                 <X size={20} weight="bold" aria-hidden="true" />
               </button>
@@ -154,8 +130,8 @@ export default function ProjectsGrid() {
 
             <div className="pao-work-modal__viewport">
               <iframe
-                src={CLIENT_WORK_URL}
-                title="Jose Paolo Olan client creative work"
+                src={activeCase.embedUrl}
+                title={`${activeCase.title} case study`}
                 loading="eager"
                 referrerPolicy="strict-origin-when-cross-origin"
                 scrolling="yes"
