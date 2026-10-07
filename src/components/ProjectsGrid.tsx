@@ -4,8 +4,30 @@ import { ArrowUpRight, X } from '@/components/slab'
 const BASE = import.meta.env.BASE_URL
 const CLIENT_WORK_URL = 'https://olanjp.wixsite.com/paodigital/work'
 
-const CASES = [
+type LinkCase = {
+  kind: 'link'
+  index: string
+  title: string
+  category: string
+  summary: string
+  meta: string
+  href: string
+}
+
+type ModalCase = {
+  kind: 'modal'
+  index: string
+  title: string
+  category: string
+  summary: string
+  meta: string
+}
+
+type CaseItem = LinkCase | ModalCase
+
+const CASES: CaseItem[] = [
   {
+    kind: 'link',
     index: '01',
     title: 'Meta Media Buyer',
     category: 'Performance Marketing',
@@ -14,6 +36,7 @@ const CASES = [
     href: `${BASE}case-studies/meta-media-buyer.html`,
   },
   {
+    kind: 'link',
     index: '02',
     title: 'Multi-Market Organic Social',
     category: 'INTO University Partnerships',
@@ -22,6 +45,7 @@ const CASES = [
     href: `${BASE}case-studies/into-university.html`,
   },
   {
+    kind: 'link',
     index: '03',
     title: 'Paid + Organic Social Growth',
     category: 'Surge Fitness Lifestyle',
@@ -30,14 +54,14 @@ const CASES = [
     href: `${BASE}case-studies/surge-fitness.html`,
   },
   {
+    kind: 'modal',
     index: '04',
     title: 'Creative Systems Across Client Work',
     category: 'Freelance',
     summary: 'Digital creative production across e-commerce and service clients, from branded social content to promotional and advertising assets.',
     meta: 'Design · Social · E-commerce · Services',
-    modal: true,
   },
-] as const
+]
 
 export default function ProjectsGrid() {
   const [clientWorkOpen, setClientWorkOpen] = useState(false)
@@ -73,7 +97,7 @@ export default function ProjectsGrid() {
               </>
             )
 
-            if ('modal' in item && item.modal) {
+            if (item.kind === 'modal') {
               return (
                 <button
                   type="button"
