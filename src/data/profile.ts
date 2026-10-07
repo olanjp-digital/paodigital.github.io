@@ -1,15 +1,3 @@
-/**
- * YOUR IDENTITY - start here.
- *
- * Everything that says who you are lives in this file: name, handle, photo,
- * socials, email and the Home headline. Every value below is a PLACEHOLDER.
- * Replace the text, or hand this file to your AI assistant and tell it what
- * to put in each field.
- *
- * Page-specific copy (projects, services, testimonials, FAQs) lives in the
- * other files in src/data/ and at the top of each view component.
- */
-
 import { Briefcase, SealCheck, Clock, type Icon } from '@/components/slab'
 
 export type SocialLink = {
@@ -18,23 +6,17 @@ export type SocialLink = {
   iconPath: string
 }
 
-/** A proof fact on the phone's Home: a glyph, a short value, a caption. */
 export type Stat = { value: string; label: string; Icon: Icon }
 
 export type Profile = {
   name: string
-  /** First name, used in "Hi, I'm ___." on About. */
   firstName: string
   handle: string
-  /** Short role line under the handle on phones. */
   role: string
-  /** Square image. An SVG, WebP or PNG with a transparent background looks best. */
   avatarSrc: string
-  /** Tooltip / screen-reader label on the verified tick next to your name. */
   verifiedLabel: string
   email: string
   location: string
-  /** Three short proof facts shown on phones under the Home lede. */
   stats: Stat[]
   displayName: { line1: string; line2: string }
   hero: {
@@ -45,32 +27,31 @@ export type Profile = {
   socials: SocialLink[]
 }
 
+const BASE = import.meta.env.BASE_URL
+
 export const profile: Profile = {
-  name: 'Your Name',
-  firstName: 'Your Name',
-  handle: '@yourhandle',
-  role: 'PLACEHOLDER - your title',
-  avatarSrc: '/avatar.svg',
-  verifiedLabel: 'PLACEHOLDER - what the tick means (e.g. a certification)',
-  email: 'you@example.com',
-  location: 'PLACEHOLDER - your city or timezone',
-  // Pick any icon from https://phosphoricons.com and import it above.
+  name: 'Jose Paolo Olan',
+  firstName: 'Pao',
+  handle: '@paodigital',
+  role: 'Digital Marketing & Growth Marketing Specialist',
+  avatarSrc: `${BASE}avatar.svg`,
+  verifiedLabel: 'Professional digital marketing portfolio',
+  email: 'olan.jp@gmail.com',
+  location: 'Batangas, Philippines',
   stats: [
-    { value: '0 yrs', label: 'PLACEHOLDER', Icon: Briefcase },
-    { value: '#000', label: 'PLACEHOLDER', Icon: SealCheck },
-    { value: 'GMT+0', label: 'PLACEHOLDER', Icon: Clock },
+    { value: '6+ yrs', label: 'digital + creative work', Icon: Briefcase },
+    { value: '≈15', label: 'centres supported', Icon: SealCheck },
+    { value: 'UTC+8', label: 'Philippines', Icon: Clock },
   ],
-  // The intro types this line, then flies it into the Home headline.
-  // Keep it short: two halves, 5-8 words total.
-  displayName: { line1: 'Your headline here.', line2: 'Keep it short.' },
+  displayName: { line1: 'Strategy. Creative.', line2: 'Performance.' },
   hero: {
-    body: 'PLACEHOLDER - one line on what you do and who you do it for.',
-    portraitSrc: '/avatar.svg',
-    portraitAlt: 'Portrait placeholder',
+    body: 'I build data-informed social, paid media, content and creative systems that connect audience insight to measurable marketing objectives.',
+    portraitSrc: `${BASE}avatar.svg`,
+    portraitAlt: 'Jose Paolo Olan portfolio mark',
   },
   socials: [
-    { label: 'Facebook profile', href: '#', iconPath: '/icons/facebook.svg' },
-    { label: 'LinkedIn profile', href: '#', iconPath: '/icons/linkedin.svg' },
-    { label: 'Discord profile', href: '#', iconPath: '/icons/discord.svg' },
+    { label: 'LinkedIn profile', href: 'https://www.linkedin.com/in/paodigital/', iconPath: `${BASE}icons/linkedin.svg` },
+    { label: 'WhatsApp', href: 'https://wa.me/639565802806', iconPath: `${BASE}icons/whatsapp.svg` },
+    { label: 'Creative portfolio archive', href: 'https://olanjp.wixsite.com/paodigital', iconPath: `${BASE}icons/portfolio.svg` },
   ],
 }
