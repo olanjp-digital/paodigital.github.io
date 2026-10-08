@@ -10,6 +10,7 @@ import { restorePrefs } from '@/lib/a11y'
 const ProjectsView = lazy(() => import('@/views/ProjectsView'))
 const ServicesView = lazy(() => import('@/views/ServicesView'))
 const TestimonialsGrid = lazy(() => import('@/components/TestimonialsGrid'))
+const CredentialsGrid = lazy(() => import('@/components/CredentialsGrid'))
 const AboutGrid = lazy(() => import('@/components/AboutGrid'))
 const ContactGrid = lazy(() => import('@/components/ContactGrid'))
 
@@ -27,6 +28,7 @@ import './styles/projects-grid.css'
 import './styles/services-grid.css'
 import './styles/showcase.css'
 import './styles/testimonials-grid.css'
+import './styles/credentials-grid.css'
 import './styles/about-grid.css'
 import './styles/contact-grid.css'
 import './styles/boot.css'
@@ -55,6 +57,7 @@ createRoot(container).render(
           <Route path="/" element={<Home />} />
           <Route path="/projects" element={<ProjectsView />} />
           <Route path="/services" element={<ServicesView />} />
+          <Route path="/credentials" element={<CredentialsGrid />} />
           <Route path="/recommendations" element={<TestimonialsGrid />} />
           <Route path="/testimonials" element={<TestimonialsGrid />} />
           <Route path="/about" element={<AboutGrid />} />
