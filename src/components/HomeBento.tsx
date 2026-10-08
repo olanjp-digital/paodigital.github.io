@@ -108,10 +108,10 @@ export default function HomeBento() {
       </Link>
 
       <Link to="/credentials" className="bento__card bento__card--creds">
-        <CardHead Icon={Medal} title="Credentials" desc="LinkedIn Learning and Hootsuite Academy certificates." />
+        <CardHead Icon={Medal} title="Credentials" desc="LinkedIn Learning, Hootsuite, Udemy and Pro VA certificates." />
         <div className="bento__media bento__badge" aria-hidden="true">
           <span className="bento__badge-ring"><img src={`${import.meta.env.BASE_URL}favicon.svg`} alt="" width={72} height={72} /></span>
-          <span className="bento__badge-tag"><SealCheck size={14} weight="fill" />3 certificates</span>
+          <span className="bento__badge-tag"><SealCheck size={14} weight="fill" />7 certificates</span>
         </div>
       </Link>
 
