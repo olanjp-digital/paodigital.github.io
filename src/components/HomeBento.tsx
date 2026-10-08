@@ -39,10 +39,11 @@ const OFFERS = [
   { Icon: AppWindow, title: 'Creative', note: 'Design + ad assets' },
 ] as const
 
-const CONTACTS = [
-  { name: 'Email', role: profile.email, work: 'Direct inquiry' },
-  { name: 'LinkedIn', role: 'linkedin.com/in/paodigital', work: 'Professional profile' },
-  { name: 'WhatsApp', role: '+63 956 580 2806', work: 'Direct message' },
+const RECOMMENDATIONS = [
+  { name: "Marc D'Costa", role: 'Managed Pao directly · INTO', work: '“Work ethic, enthusiasm and Social Media expertise are exemplary.”' },
+  { name: 'James Nguyen', role: 'Managed Pao directly · INTO', work: '“A capable and dependable digital marketer.”' },
+  { name: 'Rilla Roessel', role: 'Senior colleague · INTO', work: '“Strong understanding of social media… dedication and care.”' },
+  { name: 'Previous freelance client', role: 'Private client message', work: '“He set up the whole campaign for me and it smashed it!”' },
 ] as const
 
 const PHOTOS = [profile.avatarSrc, profile.avatarSrc, profile.avatarSrc]
@@ -59,9 +60,7 @@ function CardHead({
   return (
     <header className="bento__head">
       <span className="bento__label">
-        <span className="bento__icon">
-          <Icon size={20} weight="fill" aria-hidden="true" />
-        </span>
+        <span className="bento__icon"><Icon size={20} weight="fill" aria-hidden="true" /></span>
         <h3 className="bento__title">{title}</h3>
       </span>
       <p className="bento__desc">{desc}</p>
@@ -79,10 +78,7 @@ export default function HomeBento() {
           <div className="bento__reel-track">
             {[...WORK, ...WORK].map(([title, label], i) => (
               <span className="bento__shot" key={i}>
-                <span className="pao-mini-browser">
-                  <small>{String((i % WORK.length) + 1).padStart(2, '0')} · {label}</small>
-                  <strong>{title}</strong>
-                </span>
+                <span className="pao-mini-browser"><small>{String((i % WORK.length) + 1).padStart(2, '0')} · {label}</small><strong>{title}</strong></span>
               </span>
             ))}
           </div>
@@ -93,9 +89,7 @@ export default function HomeBento() {
         <CardHead Icon={User} title="About" desc="Digital marketing, growth, social, paid media and creative." />
         <div className="bento__media bento__fan" aria-hidden="true">
           {PHOTOS.map((src, i) => (
-            <span key={i} className="bento__photo" style={{ ['--i' as string]: i }}>
-              <img src={src} alt="" loading="lazy" decoding="async" />
-            </span>
+            <span key={i} className="bento__photo" style={{ ['--i' as string]: i }}><img src={src} alt="" loading="lazy" decoding="async" /></span>
           ))}
         </div>
       </Link>
@@ -106,9 +100,7 @@ export default function HomeBento() {
           {[TOOLS.slice(0, 3), TOOLS.slice(3)].map((row, r) => (
             <div key={r} className="bento__chip-row" data-dir={r ? 'right' : 'left'}>
               <div className="bento__chip-track">
-                {[...row, ...row].map(([tool], i) => (
-                  <span key={`${tool}-${i}`} className="bento__chip">{tool}</span>
-                ))}
+                {[...row, ...row].map(([tool], i) => <span key={`${tool}-${i}`} className="bento__chip">{tool}</span>)}
               </div>
             </div>
           ))}
@@ -118,13 +110,8 @@ export default function HomeBento() {
       <Link to="/about" className="bento__card bento__card--creds">
         <CardHead Icon={Medal} title="Credentials" desc="Training across paid media, social, AI and digital marketing." />
         <div className="bento__media bento__badge" aria-hidden="true">
-          <span className="bento__badge-ring">
-            <img src={`${import.meta.env.BASE_URL}favicon.svg`} alt="" width={72} height={72} />
-          </span>
-          <span className="bento__badge-tag">
-            <SealCheck size={14} weight="fill" />
-            Continuous learning
-          </span>
+          <span className="bento__badge-ring"><img src={`${import.meta.env.BASE_URL}favicon.svg`} alt="" width={72} height={72} /></span>
+          <span className="bento__badge-tag"><SealCheck size={14} weight="fill" />Continuous learning</span>
         </div>
       </Link>
 
@@ -134,25 +121,22 @@ export default function HomeBento() {
           {OFFERS.map(({ Icon, title, note }, i) => (
             <li key={title} className="bento__offer" style={{ ['--i' as string]: i }}>
               <span className="bento__offer-tile"><Icon size={15} weight="duotone" aria-hidden="true" /></span>
-              <span className="bento__offer-text">
-                <span className="bento__offer-title">{title}</span>
-                <span className="bento__offer-note">{note}</span>
-              </span>
+              <span className="bento__offer-text"><span className="bento__offer-title">{title}</span><span className="bento__offer-note">{note}</span></span>
               <span className="bento__offer-num" aria-hidden="true">0{i + 1}</span>
             </li>
           ))}
         </ul>
       </Link>
 
-      <Link to="/contact" className="bento__card bento__card--quotes">
-        <CardHead Icon={Quotes} title="Contact" desc="Open to digital marketing opportunities and selected freelance work." />
+      <Link to="/recommendations" className="bento__card bento__card--quotes">
+        <CardHead Icon={Quotes} title="Recommendations" desc="LinkedIn recommendations and client feedback from people I’ve worked with." />
         <div className="bento__media bento__reviews" aria-hidden="true">
           <div className="bento__reviews-track">
-            {[...CONTACTS, ...CONTACTS].map((c, i) => (
+            {[...RECOMMENDATIONS, ...RECOMMENDATIONS].map((item, i) => (
               <span key={i} className="bento__review">
-                <span className="bento__review-top"><Quotes size={14} weight="fill" /><b>{c.name}</b></span>
-                <span className="bento__review-role">{c.role}</span>
-                <span className="bento__review-work">{c.work}</span>
+                <span className="bento__review-top"><Quotes size={14} weight="fill" /><b>{item.name}</b></span>
+                <span className="bento__review-role">{item.role}</span>
+                <span className="bento__review-work">{item.work}</span>
               </span>
             ))}
           </div>

@@ -1,255 +1,152 @@
 import { useState } from 'react'
-import { Play, Gauge, Robot, Code } from '@/components/slab'
-import type { Icon } from '@/components/slab'
+import { ArrowUpRight, Quotes, SealCheck } from '@/components/slab'
 
-/**
- * TestimonialsGrid - the Testimonials view as a fixed viewport.
- *
- * Two columns inside one glass sheet: the video proof on the left, the client
- * ledger on the right. The page is sized to the panel and does not scroll, so
- * both clips share ONE stage and a picker switches between them rather than
- * stacking two players down a column that would never fit.
- *
- * Clips can disagree about orientation, so the stage is ONE fixed plate that
- * each is contained inside. Letting the frame take each clip's own ratio made
- * it jump size on every switch; a single plate keeps the card the same object
- * whichever is playing.
- *
- * To add a video: drop the .mp4 in public/testimonials/, set its `src` below
- * (e.g. '/testimonials/client-1.mp4'), and swap the poster for a still from
- * the clip. With `src` empty the cover stays up and play is disabled.
- */
-
-type Clip = {
-  id: string
-  index: string
-  /** Leave empty until you have the video file. */
-  src: string
-  poster: string
-  duration: string
-  kicker: string
-  width: number
-  height: number
-}
-
-const CLIPS: Clip[] = [
-  {
-    id: 'clip-1',
-    index: '01',
-    src: '',
-    poster: '/placeholders/testimonial-1.jpg',
-    duration: '0:00',
-    kicker: 'Client testimonial',
-    width: 720,
-    height: 1080,
-  },
-  {
-    id: 'clip-2',
-    index: '02',
-    src: '',
-    poster: '/placeholders/testimonial-2.jpg',
-    duration: '0:00',
-    kicker: 'Client testimonial',
-    width: 720,
-    height: 1080,
-  },
-]
-
-/* The client ledger. `logoSrc` is optional - without it the medallion falls
-   back to the icon. */
-
-type Client = {
+type Recommendation = {
   index: string
   name: string
   role: string
-  daily: string
-  work: string[]
-  logoSrc?: string
-  Icon: Icon
+  date: string
+  relationship: string
+  source: 'LinkedIn Recommendation' | 'Private Client Message'
+  quote: string
+  tags: string[]
 }
 
-const CLIENTS: Client[] = [
+const RECOMMENDATIONS: Recommendation[] = [
   {
     index: '01',
-    name: 'Client Name 1',
-    role: 'PLACEHOLDER ROLE',
-    daily:
-      'PLACEHOLDER - tell me what to put here: one or two sentences on what you run or build for this client day to day.',
-    work: ['Tag', 'Tag', 'Tag'],
-    logoSrc: '/placeholders/logo.svg',
-    Icon: Gauge,
+    name: 'Rilla Roessel',
+    role: 'Senior marketing leader with 20+ years in global education and edtech driving enrolment growth, brand evolution & CRM/digital strategies.',
+    date: 'October 5, 2026',
+    relationship: 'Rilla was senior to Jose Paolo but didn’t manage Jose Paolo directly.',
+    source: 'LinkedIn Recommendation',
+    quote: `I had the pleasure of working with Pau on our team. He’s an outgoing, friendly colleague with a strong understanding of social media. Supporting more than 10 brands with monthly organic content was no small task, and Pau approached the work with dedication and care.
+
+What stood out most to me was his commitment to continuous improvement and his openness to learning. When we reviewed his process, he readily shared what he’d refined and welcomed new ideas. That kind of curiosity and openness makes a real difference on a team, and I’d gladly recommend Pau.`,
+    tags: ['Social Media', 'Continuous Improvement', 'Teamwork'],
   },
   {
     index: '02',
-    name: 'Client Name 2',
-    role: 'PLACEHOLDER ROLE',
-    daily:
-      'PLACEHOLDER - tell me what to put here: one or two sentences on what you run or build for this client day to day.',
-    work: ['Tag', 'Tag', 'Tag'],
-    logoSrc: '/placeholders/logo.svg',
-    Icon: Robot,
+    name: "Marc D'Costa",
+    role: 'Assistant Director, Growth Marketing at INTO University Partnerships. Head of global digital team including CRM, Social Media, Performance Marketing and Data Analytics.',
+    date: 'September 28, 2026',
+    relationship: 'Marc managed Jose Paolo directly.',
+    source: 'LinkedIn Recommendation',
+    quote: `Pao has been a highly valued member of my team for the past year. INTO is a complex business, operating in the International Higher Education sector, where we manage a significant number of individual social media channels to service our University partnerships.
+
+Pao hit the ground running and his work ethic, enthusiasm and Social Media expertise are exemplary. He has displayed skills across all aspects of Social Media from planning and execution to design and copywriting. All done at scale and to tight deadlines.
+
+Pao is a credit to his profession and I know the experience he has gained from INTO, operating numerous social media channels on a global level will put him in good stead for the future!`,
+    tags: ['Social Media', 'Scale', 'Planning + Execution', 'Copywriting'],
   },
   {
     index: '03',
-    name: 'Client Name 3',
-    role: 'PLACEHOLDER ROLE',
-    daily:
-      'PLACEHOLDER - tell me what to put here: one or two sentences on what you run or build for this client day to day.',
-    work: ['Tag', 'Tag', 'Tag'],
-    logoSrc: '/placeholders/logo.svg',
-    Icon: Code,
+    name: 'James Nguyen',
+    role: 'Global Digital & Growth | INTO University Partnerships',
+    date: 'September 28, 2026',
+    relationship: 'James managed Jose Paolo directly.',
+    source: 'LinkedIn Recommendation',
+    quote: `I had the chance to work closely with Pao at INTO and would surely recommend him as a capable and dependable digital marketer.
+
+Paolo manages content across a dozen of social media channels on different platforms, each requiring close attention to brand guidelines. He brings together strong writing, design and video editing skills with a great understanding of social media campaigns. He is quick to learn new tools and thoughtful about how to use them.
+
+What I value most is the confidence I can place in him as Pao takes ownership of his work, handles competing priorities calmly and delivers to a high standard under pressure. I would gladly and certainly work with him again.`,
+    tags: ['Ownership', 'Brand Guidelines', 'Writing + Design + Video', 'Under Pressure'],
+  },
+  {
+    index: '04',
+    name: 'Previous Freelance Client',
+    role: 'Private client message · name withheld',
+    date: 'Client testimonial',
+    relationship: 'An anonymized excerpt from a private client message supplied for this portfolio.',
+    source: 'Private Client Message',
+    quote: `Pao did a great job on my recent 3 part live launch he was doing reporting he set up the whole campaign for me and it smashed it!`,
+    tags: ['Campaign Setup', 'Reporting', 'Launch Support'],
   },
 ]
 
 export default function TestimonialsGrid() {
-  const [active, setActive] = useState(0)
-  // The stage shows the clip's poster as cover art until it is asked to
-  // play. A poster can fill the frame edge to edge whichever way the clip is
-  // shot; a paused <video> cannot, and letterboxing one orientation into a
-  // fixed frame left a third of the plate as dead margin.
-  const [playing, setPlaying] = useState(false)
-  const clip = CLIPS[active]
-  const hasVideo = clip.src !== ''
-  const pick = (i: number) => {
-    setActive(i)
-    setPlaying(false)
-  }
+  const [active, setActive] = useState(1)
+  const recommendation = RECOMMENDATIONS[active]
 
   return (
-    <section className="pgrid tgrid" aria-labelledby="testimonials-title">
+    <section className="pgrid tgrid" aria-labelledby="recommendations-title">
       <header className="pgrid__head">
-        <span className="pgrid__eyebrow">Testimonials</span>
-        <h1 className="pgrid__title" id="testimonials-title">
-          Your testimonials headline.
-        </h1>
-        <p className="pgrid__lede">
-          PLACEHOLDER - tell me what to put here: one line that introduces the videos and the client list.
-        </p>
+        <span className="pgrid__eyebrow">Recommendations</span>
+        <h1 className="pgrid__title" id="recommendations-title">What managers and clients say about the work.</h1>
+        <p className="pgrid__lede">Three LinkedIn recommendations from INTO colleagues and managers, plus an anonymized testimonial from a previous freelance client.</p>
       </header>
 
       <div className="home__glass tgrid__glass">
-        {/* Left: one stage, two clips. */}
-        <div className="tgrid__reel">
-          <div className="tgrid__stage">
-            {playing && hasVideo ? (
-              // Re-keyed so switching clips mounts a fresh element instead of
-              // swapping src on a player that is already mid-playback.
-              <video
-                key={clip.id}
-                className="tgrid__video"
-                src={clip.src}
-                poster={clip.poster}
-                width={clip.width}
-                height={clip.height}
-                controls
-                autoPlay
-                playsInline
-                aria-label={`Video testimonial ${clip.index} from a client`}
-              />
-            ) : (
-              <button
-                type="button"
-                className="tgrid__cover"
-                onClick={() => hasVideo && setPlaying(true)}
-                disabled={!hasVideo}
-                aria-label={
-                  hasVideo
-                    ? `Play client testimonial ${clip.index}, ${clip.duration}`
-                    : `Client testimonial ${clip.index}, no video added yet`
-                }
-              >
-                <img
-                  key={clip.id}
-                  className="tgrid__cover-img"
-                  src={clip.poster}
-                  alt=""
-                  decoding="async"
-                />
-                <span className="tgrid__cover-shade" aria-hidden="true" />
-                {hasVideo && (
-                  <span className="tgrid__cover-play" aria-hidden="true">
-                    <Play size={26} weight="fill" />
-                  </span>
-                )}
-                <span className="tgrid__cover-meta" aria-hidden="true">
-                  <span className="tgrid__cover-kicker">
-                    {clip.kicker} {clip.index}
-                  </span>
-                  <span className="tgrid__cover-sub">
-                    {hasVideo
-                      ? `${clip.duration} · Tap to play`
-                      : 'PLACEHOLDER - add your video to public/testimonials/'}
-                  </span>
-                </span>
-              </button>
-            )}
+        <article className="tgrid__featured" aria-live="polite">
+          <div className="tgrid__featured-top">
+            <span className="tgrid__source">
+              {recommendation.source === 'LinkedIn Recommendation' && <SealCheck size={15} weight="fill" aria-hidden="true" />}
+              {recommendation.source}
+            </span>
+            <span className="tgrid__featured-index" aria-hidden="true">{recommendation.index}</span>
           </div>
 
-          {/* The picker is one segmented control, not two loose chips: two
-              cells on a shared plate, the active one lit. */}
-          <div className="tgrid__picker" role="group" aria-label="Choose a testimonial">
-            {CLIPS.map((c, i) => (
+          <div className="tgrid__quote-mark" aria-hidden="true"><Quotes size={34} weight="fill" /></div>
+
+          <blockquote className="tgrid__quote">
+            {recommendation.quote.split('\n\n').map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+          </blockquote>
+
+          <footer className="tgrid__featured-person">
+            <span className="tgrid__initials" aria-hidden="true">
+              {recommendation.name === 'Previous Freelance Client' ? 'CL' : recommendation.name.split(' ').map((part) => part[0]).slice(0, 2).join('')}
+            </span>
+            <span className="tgrid__featured-copy">
+              <strong>{recommendation.name}</strong>
+              <span>{recommendation.role}</span>
+              <small>{recommendation.date} · {recommendation.relationship}</small>
+            </span>
+          </footer>
+
+          <ul className="tgrid__tags" role="list">
+            {recommendation.tags.map((tag) => <li key={tag}>{tag}</li>)}
+          </ul>
+
+          {recommendation.source === 'LinkedIn Recommendation' && (
+            <a className="tgrid__linkedin" href="https://www.linkedin.com/in/paodigital/" target="_blank" rel="noopener noreferrer">
+              View Pao’s LinkedIn profile <ArrowUpRight size={14} weight="bold" aria-hidden="true" />
+            </a>
+          )}
+        </article>
+
+        <div className="tgrid__ledger">
+          <div className="tgrid__ledger-head">
+            <h2 className="tgrid__ledger-title">Recommendations & client proof.</h2>
+            <p className="tgrid__ledger-sub">Select a person to read the full recommendation.</p>
+          </div>
+
+          <div className="tgrid__clients" role="list">
+            {RECOMMENDATIONS.map((item, i) => (
               <button
-                key={c.id}
+                key={item.index}
                 type="button"
-                className={`tgrid__pick${i === active ? ' is-active' : ''}`}
-                onClick={() => pick(i)}
+                className={`tgrid__client${i === active ? ' is-active' : ''}`}
+                onClick={() => setActive(i)}
                 aria-pressed={i === active}
               >
-                <span className="tgrid__pick-thumb" aria-hidden="true">
-                  <img src={c.poster} alt="" loading="lazy" decoding="async" />
+                <span className="tgrid__client-ghost" aria-hidden="true">{item.index}</span>
+                <span className="tgrid__client-mark" aria-hidden="true">
+                  {item.name === 'Previous Freelance Client' ? 'CL' : item.name.split(' ').map((part) => part[0]).slice(0, 2).join('')}
                 </span>
-                <span className="tgrid__pick-copy">
-                  <span className="tgrid__pick-kicker">Testimonial {c.index}</span>
-                  <span className="tgrid__pick-meta">{c.duration}</span>
+                <span className="tgrid__client-body">
+                  <span className="tgrid__client-head">
+                    <span className="tgrid__client-name">{item.name}</span>
+                    <span className="tgrid__client-role">{item.source === 'LinkedIn Recommendation' ? 'LinkedIn' : 'Client'}</span>
+                  </span>
+                  <span className="tgrid__client-daily">
+                    {item.quote.split('\n')[0].length > 150 ? `${item.quote.split('\n')[0].slice(0, 147)}…` : item.quote.split('\n')[0]}
+                  </span>
+                  <span className="tgrid__client-meta">{item.date}</span>
                 </span>
               </button>
             ))}
           </div>
-        </div>
-
-        {/* Right: the client ledger, one row per client. */}
-        <div className="tgrid__ledger">
-          <div className="tgrid__ledger-head">
-            <h2 className="tgrid__ledger-title">Your client list headline here.</h2>
-            <p className="tgrid__ledger-sub">Short supporting line.</p>
-          </div>
-
-          {/* One plate, three rows split by hairlines. Three boxed cards each
-              carrying their own border read as three separate widgets; a
-              single ledger reads as one record. */}
-          <ul className="tgrid__clients" role="list">
-            {CLIENTS.map((c) => {
-              const FallbackIcon = c.Icon
-              return (
-                <li key={c.index} className="tgrid__client">
-                  <span className="tgrid__client-ghost" aria-hidden="true">{c.index}</span>
-                  <span className="tgrid__client-mark" aria-hidden="true">
-                    {c.logoSrc ? (
-                      <img src={c.logoSrc} alt="" loading="lazy" decoding="async" />
-                    ) : (
-                      <FallbackIcon size={22} weight="duotone" />
-                    )}
-                  </span>
-
-                  <span className="tgrid__client-body">
-                    <span className="tgrid__client-head">
-                      <span className="tgrid__client-name">{c.name}</span>
-                      <span className="tgrid__client-role">{c.role}</span>
-                    </span>
-                    <span className="tgrid__client-daily">{c.daily}</span>
-                    <ul className="tgrid__client-tags" role="list">
-                      {c.work.map((w, i) => (
-                        <li key={`${w}-${i}`} className="tgrid__client-tag">
-                          {w}
-                        </li>
-                      ))}
-                    </ul>
-                  </span>
-                </li>
-              )
-            })}
-          </ul>
         </div>
       </div>
     </section>
