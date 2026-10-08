@@ -1,58 +1,163 @@
 import { Link } from 'react-router-dom'
-import { ArrowUpRight, FolderOpen, Stack, User, EnvelopeSimple } from '@/components/slab'
+import {
+  ArrowUpRight,
+  FolderOpen,
+  User,
+  Medal,
+  Stack,
+  Quotes,
+  FunnelSimple,
+  Gear,
+  AddressBook,
+  Globe,
+  AppWindow,
+  SealCheck,
+} from '@/components/slab'
+import { profile } from '@/data/profile'
 
-const CARDS = [
-  {
-    to: '/projects',
-    label: 'Selected Work',
-    title: 'Case studies with context.',
-    body: 'Paid media, multi-market organic social, integrated social execution and freelance creative work.',
-    Icon: FolderOpen,
-    meta: '4 focused case studies',
-  },
-  {
-    to: '/services',
-    label: 'Capabilities',
-    title: 'Strategy through optimization.',
-    body: 'Social strategy, Meta media buying, content, creative, analytics and performance reporting.',
-    Icon: Stack,
-    meta: 'Full-funnel skill set',
-  },
-  {
-    to: '/about',
-    label: 'About',
-    title: 'Multi-market digital experience.',
-    body: 'Experience across education, fitness, healthcare, e-commerce and service businesses.',
-    Icon: User,
-    meta: 'US · UK · Asia',
-  },
-  {
-    to: '/contact',
-    label: 'Contact',
-    title: 'Open to the right opportunity.',
-    body: 'Digital marketing roles, growth-focused teams and selected freelance projects.',
-    Icon: EnvelopeSimple,
-    meta: 'Batangas · UTC+8',
-  },
+const WORK = [
+  ['Meta Media Buyer', 'Performance'],
+  ['INTO University Partnerships', 'Organic social'],
+  ['Surge Fitness Lifestyle', 'Paid + organic'],
+  ['Freelance Client Work', 'Creative systems'],
 ] as const
+
+const TOOLS = [
+  ['Meta Ads Manager', 'Paid social'],
+  ['GA4', 'Analytics'],
+  ['Meta Business Suite', 'Organic insights'],
+  ['Google Ads', 'Paid search'],
+  ['Adobe Creative Suite', 'Creative'],
+  ['TikTok', 'Social'],
+] as const
+
+const OFFERS = [
+  { Icon: FunnelSimple, title: 'Social Strategy', note: 'Organic planning + management' },
+  { Icon: Gear, title: 'Meta Media Buying', note: 'Campaigns + optimization' },
+  { Icon: AddressBook, title: 'Content & Copy', note: 'Platform-native execution' },
+  { Icon: Globe, title: 'Analytics', note: 'GA4 + platform insights' },
+  { Icon: AppWindow, title: 'Creative', note: 'Design + ad assets' },
+] as const
+
+const CONTACTS = [
+  { name: 'Email', role: profile.email, work: 'Direct inquiry' },
+  { name: 'LinkedIn', role: 'linkedin.com/in/paodigital', work: 'Professional profile' },
+  { name: 'WhatsApp', role: '+63 956 580 2806', work: 'Direct message' },
+] as const
+
+const PHOTOS = [profile.avatarSrc, profile.avatarSrc, profile.avatarSrc]
+
+function CardHead({
+  Icon,
+  title,
+  desc,
+}: {
+  Icon: typeof FolderOpen
+  title: string
+  desc: string
+}) {
+  return (
+    <header className="bento__head">
+      <span className="bento__label">
+        <span className="bento__icon">
+          <Icon size={20} weight="fill" aria-hidden="true" />
+        </span>
+        <h3 className="bento__title">{title}</h3>
+      </span>
+      <p className="bento__desc">{desc}</p>
+      <ArrowUpRight size={15} weight="bold" aria-hidden="true" className="bento__arrow" />
+    </header>
+  )
+}
 
 export default function HomeBento() {
   return (
-    <nav className="pao-bento" aria-label="Explore the portfolio">
-      {CARDS.map(({ to, label, title, body, Icon, meta }, i) => (
-        <Link key={to} to={to} className="pao-bento__card">
-          <span className="pao-bento__top">
-            <span className="pao-bento__icon"><Icon size={19} weight="duotone" aria-hidden="true" /></span>
-            <span className="pao-bento__index">0{i + 1}</span>
+    <nav className="bento" aria-label="Explore the portfolio">
+      <Link to="/projects" className="bento__card bento__card--projects">
+        <CardHead Icon={FolderOpen} title="Selected Work" desc="Four focused case studies with role, context and evidence." />
+        <div className="bento__media bento__reel" aria-hidden="true">
+          <div className="bento__reel-track">
+            {[...WORK, ...WORK].map(([title, label], i) => (
+              <span className="bento__shot" key={i}>
+                <span className="pao-mini-browser">
+                  <small>{String((i % WORK.length) + 1).padStart(2, '0')} · {label}</small>
+                  <strong>{title}</strong>
+                </span>
+              </span>
+            ))}
+          </div>
+        </div>
+      </Link>
+
+      <Link to="/about" className="bento__card bento__card--about">
+        <CardHead Icon={User} title="About" desc="Digital marketing, growth, social, paid media and creative." />
+        <div className="bento__media bento__fan" aria-hidden="true">
+          {PHOTOS.map((src, i) => (
+            <span key={i} className="bento__photo" style={{ ['--i' as string]: i }}>
+              <img src={src} alt="" loading="lazy" decoding="async" />
+            </span>
+          ))}
+        </div>
+      </Link>
+
+      <Link to="/projects" className="bento__card bento__card--ai">
+        <CardHead Icon={FunnelSimple} title="Performance" desc="Paid media, analytics and optimization." />
+        <div className="bento__media bento__chips" aria-hidden="true">
+          {[TOOLS.slice(0, 3), TOOLS.slice(3)].map((row, r) => (
+            <div key={r} className="bento__chip-row" data-dir={r ? 'right' : 'left'}>
+              <div className="bento__chip-track">
+                {[...row, ...row].map(([tool], i) => (
+                  <span key={`${tool}-${i}`} className="bento__chip">{tool}</span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </Link>
+
+      <Link to="/about" className="bento__card bento__card--creds">
+        <CardHead Icon={Medal} title="Credentials" desc="Training across paid media, social, AI and digital marketing." />
+        <div className="bento__media bento__badge" aria-hidden="true">
+          <span className="bento__badge-ring">
+            <img src={`${import.meta.env.BASE_URL}favicon.svg`} alt="" width={72} height={72} />
           </span>
-          <span className="pao-bento__copy">
-            <span className="pao-bento__label">{label}</span>
-            <strong>{title}</strong>
-            <span>{body}</span>
+          <span className="bento__badge-tag">
+            <SealCheck size={14} weight="fill" />
+            Continuous learning
           </span>
-          <span className="pao-bento__foot">{meta}<ArrowUpRight size={15} weight="bold" aria-hidden="true" /></span>
-        </Link>
-      ))}
+        </div>
+      </Link>
+
+      <Link to="/services" className="bento__card bento__card--services">
+        <CardHead Icon={Stack} title="Capabilities" desc="Strategy through execution and measurement." />
+        <ul className="bento__media bento__offers" role="list">
+          {OFFERS.map(({ Icon, title, note }, i) => (
+            <li key={title} className="bento__offer" style={{ ['--i' as string]: i }}>
+              <span className="bento__offer-tile"><Icon size={15} weight="duotone" aria-hidden="true" /></span>
+              <span className="bento__offer-text">
+                <span className="bento__offer-title">{title}</span>
+                <span className="bento__offer-note">{note}</span>
+              </span>
+              <span className="bento__offer-num" aria-hidden="true">0{i + 1}</span>
+            </li>
+          ))}
+        </ul>
+      </Link>
+
+      <Link to="/contact" className="bento__card bento__card--quotes">
+        <CardHead Icon={Quotes} title="Contact" desc="Open to digital marketing opportunities and selected freelance work." />
+        <div className="bento__media bento__reviews" aria-hidden="true">
+          <div className="bento__reviews-track">
+            {[...CONTACTS, ...CONTACTS].map((c, i) => (
+              <span key={i} className="bento__review">
+                <span className="bento__review-top"><Quotes size={14} weight="fill" /><b>{c.name}</b></span>
+                <span className="bento__review-role">{c.role}</span>
+                <span className="bento__review-work">{c.work}</span>
+              </span>
+            ))}
+          </div>
+        </div>
+      </Link>
     </nav>
   )
 }

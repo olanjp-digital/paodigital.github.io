@@ -1,30 +1,24 @@
 export type QA = { q: string; a: string }
 
-/**
- * The questions people ask before they email. One list, used by the FAQ
- * accordion on the Contact view (and the legacy long-scroll FAQ section).
- * Five questions, two or three sentences each: the accordion sits in a
- * fixed panel and more than that pushes the email row off the plate.
- */
 export const FAQS: QA[] = [
   {
-    q: 'What do you do?',
-    a: 'PLACEHOLDER - tell me what to put here: the kinds of work you take on, and who it is usually for.',
+    q: 'What areas do you cover?',
+    a: 'Social media strategy and management, Meta media buying, content and copy, creative execution, analytics and performance reporting.',
   },
   {
-    q: 'How fast can you start?',
-    a: 'PLACEHOLDER - tell me what to put here: your usual lead time for small fixes vs. larger projects, and your working hours.',
+    q: 'What kind of work can I review?',
+    a: 'The Work section includes focused case studies across paid media, multi-market organic social, integrated social execution and freelance client creative work.',
   },
   {
-    q: 'How much do you charge?',
-    a: 'PLACEHOLDER - tell me what to put here: how you price (hourly, per project, retainer) and how a quote is put together.',
+    q: 'How do you handle confidential work?',
+    a: 'Public case studies avoid confidential internal data, personal information and unapproved reporting. Where needed, the portfolio uses high-level scope, process and public-facing examples instead.',
   },
   {
     q: 'Where are you based?',
-    a: 'PLACEHOLDER - tell me what to put here: your location or timezone, and which client timezones you overlap with.',
+    a: 'Batangas, Philippines, on UTC+8, with experience supporting work across US, UK and Asia markets.',
   },
   {
-    q: 'What happens after I write?',
-    a: 'PLACEHOLDER - tell me what to put here: how fast you reply and what the next step looks like.',
+    q: 'How should I contact you?',
+    a: 'Email is the best starting point. LinkedIn and WhatsApp are also linked on this page and in the profile rail.',
   },
 ]
