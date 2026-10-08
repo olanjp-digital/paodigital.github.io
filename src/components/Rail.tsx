@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
-import { SealCheck } from '@/components/slab'
+import { Quotes, SealCheck } from '@/components/slab'
 import ThemeGlyph from './ThemeGlyph'
 import { HomeIcon, FolderIcon, StackIcon, UserIcon, MessageIcon } from './RailIcons'
 import { getTheme, toggleTheme, type Theme } from '@/lib/theme'
@@ -10,6 +10,7 @@ export const RAIL_LINKS = [
   { label: 'Home', to: '/', Icon: HomeIcon },
   { label: 'Work', to: '/projects', Icon: FolderIcon },
   { label: 'Capabilities', to: '/services', Icon: StackIcon },
+  { label: 'Recommendations', to: '/recommendations', Icon: Quotes },
   { label: 'About', to: '/about', Icon: UserIcon },
   { label: 'Contact', to: '/contact', Icon: MessageIcon },
 ] as const
